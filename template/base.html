@@ -1,0 +1,151 @@
+<html>
+
+<head>
+    <title>TTGen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        milk: '#eff7f6',
+                        mint: '#b2f7ef',
+                        bluee: '#7bdff2',
+                        lpink: '#f7d6e0',
+                        dpink: '#f2b5d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+        crossorigin="anonymous" />
+    <style>
+        :root {
+            --gray0: #ffffff;
+            --gray1: #dbe1e8;
+            --gray2: #b2becd;
+            --gray3: #6c7983;
+            --gray4: #454e56;
+            --gray5: #2a2e35;
+            --gray6: #000000;
+            --blue: #0084a5;
+            --purple: #a82dd1;
+            --yellow: #fff565;
+        }
+
+        .light {
+            --bg: #eff7f6;
+            --hover: #f2b5d4;
+            --bg-nav: var(--gray3);
+            --bg-dropdown: var(--gray0);
+            --text: var(--gray6);
+            --border-color: var(--gray6);
+            --bg-solar: var(--yellow);
+        }
+
+        .dark {
+            --bg: #1b263b;
+            --hover: #e0e1dd;
+            --bg-nav: var(--gray2);
+            --bg-dropdown: var(--gray5);
+            --text: var(--gray0);
+            --border-color: var(--gray0);
+            --bg-solar: var(--blue);
+        }
+
+        .themeSwitcher {
+            color: var(--text);
+        }
+
+        .header_button {
+            color: var(--text);
+        }
+
+        .themeSwitcher:hover {
+            color: var(--hover);
+        }
+
+        .header_button:hover {
+            color: var(--hover);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main flex flex-col w-screen">
+        <header class="d-flex justify-content-center py-3">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="#" class="nav-link header_button" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link header_button">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link header_button">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link header_button">About</a></li>
+                <li class="nav-item flex justify-center items-center">
+                    <button class="themeSwitcher nav-link p-2" onclick="switchTheme()">
+                        <i class="bi bi-moon"></i>
+                        <i class="bi bi-brightness-high"></i>
+                    </button>
+                </li>
+            </ul>
+        </header>
+        {% block body %}
+        {% endblock %}
+    </div>
+</body>
+
+<head>
+    <script defer>
+        const theme = localStorage.getItem('theme');
+        const [light, dark] = document.getElementsByClassName('themeSwitcher')[0].children;
+        const body = document.body;
+        if (theme) {
+            body.classList.add(theme);
+            if (theme === 'dark') {
+                light.classList.add('hidden');
+            } else {
+                dark.classList.add('hidden');
+            }
+        } else {
+            body.classList.add('light');
+        }
+
+        const switchTheme = () => {
+            const theme = localStorage.getItem('theme');
+            const [dark, light] = document.getElementsByClassName('themeSwitcher')[0].children;
+            if (theme === 'dark') {
+                document.body.classList.toggle('dark');
+                document.body.classList.toggle('light');
+                light.classList.toggle('hidden');
+                dark.classList.toggle('hidden');
+                localStorage.setItem('theme', 'light');
+            } else if (theme === 'light') {
+                document.body.classList.toggle('light');
+                document.body.classList.toggle('dark');
+                light.classList.toggle('hidden');
+                dark.classList.toggle('hidden');
+                localStorage.setItem('theme', 'dark');
+            } else if (!theme) {
+                document.body.classList.toggle('light');
+                light.classList.toggle('hidden');
+                dark.classList.toggle('hidden');
+                localStorage.setItem('theme', 'light');
+            }
+            return
+        };
+
+    </script>
+</head>
+
+</html>
